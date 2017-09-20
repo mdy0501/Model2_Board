@@ -62,7 +62,7 @@
 
 ##### 1.1. BFrontController.java
 ```java
-package com.mdy.model2_bbs.frontcontroller;
+package com.mdy.model2_board.frontcontroller;
 
 import java.io.IOException;
 
@@ -73,14 +73,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.mdy.model2_bbs.command.BCommand;
-import com.mdy.model2_bbs.command.BContentCommand;
-import com.mdy.model2_bbs.command.BDeleteCommand;
-import com.mdy.model2_bbs.command.BListCommand;
-import com.mdy.model2_bbs.command.BModifyCommand;
-import com.mdy.model2_bbs.command.BReplyCommand;
-import com.mdy.model2_bbs.command.BReplyViewCommand;
-import com.mdy.model2_bbs.command.BWriteCommand;
+import com.mdy.model2_board.command.BCommand;
+import com.mdy.model2_board.command.BContentCommand;
+import com.mdy.model2_board.command.BDeleteCommand;
+import com.mdy.model2_board.command.BListCommand;
+import com.mdy.model2_board.command.BModifyCommand;
+import com.mdy.model2_board.command.BReplyCommand;
+import com.mdy.model2_board.command.BReplyViewCommand;
+import com.mdy.model2_board.command.BWriteCommand;
 
 @WebServlet("*.do")
 public class BFrontController extends HttpServlet {
@@ -104,7 +104,7 @@ public class BFrontController extends HttpServlet {
 	private void actionDo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("actionDo");
 
-		request.setCharacterEncoding("EUC-KR");
+		request.setCharacterEncoding("UTF-8");
 
 		String viewPage = null;
 		BCommand command = null;
@@ -113,13 +113,15 @@ public class BFrontController extends HttpServlet {
 		String conPath = request.getContextPath();
 		String com = uri.substring(conPath.length());
 
-		if(com.equalsIgnoreCase("/write_view.do")) {
+		if(com.equals("/write_view.do")) {
+			System.out.println("###### write_view.do");
 			viewPage = "write_view.jsp";
 		} else if(com.equals("/write.do")) {
 			command = new BWriteCommand();
 			command.execute(request, response);
 			viewPage = "list.do";
 		} else if(com.equals("/list.do")) {
+			System.out.println("###### list.do");
 			command = new BListCommand();
 			command.execute(request, response);
 			viewPage = "list.jsp";
@@ -151,7 +153,6 @@ public class BFrontController extends HttpServlet {
 	}
 
 }
-
 ```
 
 <br>
@@ -161,7 +162,7 @@ public class BFrontController extends HttpServlet {
 
 ##### 2.1. BCommand.java
 ```java
-package com.mdy.model2_bbs.command;
+package com.mdy.model2_board.command;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -177,13 +178,13 @@ public interface BCommand {
 
 ##### 2.2. BContentCommand.java
 ```java
-package com.mdy.model2_bbs.command;
+package com.mdy.model2_board.command;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.mdy.model2_bbs.dao.BDao;
-import com.mdy.model2_bbs.dto.BDto;
+import com.mdy.model2_board.dao.BDao;
+import com.mdy.model2_board.dto.BDto;
 
 public class BContentCommand implements BCommand {
 
@@ -205,12 +206,12 @@ public class BContentCommand implements BCommand {
 
 ##### 2.3. BDeleteCommand.java
 ```java
-package com.mdy.model2_bbs.command;
+package com.mdy.model2_board.command;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.mdy.model2_bbs.dao.BDao;
+import com.mdy.model2_board.dao.BDao;
 
 public class BDeleteCommand implements BCommand {
 
@@ -231,15 +232,15 @@ public class BDeleteCommand implements BCommand {
 
 ##### 2.4. BListCommand.java
 ```java
-package com.mdy.model2_bbs.command;
+package com.mdy.model2_board.command;
 
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.mdy.model2_bbs.dao.BDao;
-import com.mdy.model2_bbs.dto.BDto;
+import com.mdy.model2_board.dao.BDao;
+import com.mdy.model2_board.dto.BDto;
 
 public class BListCommand implements BCommand {
 
@@ -247,9 +248,15 @@ public class BListCommand implements BCommand {
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
 		// TODO Auto-generated method stub
 
-		BDao dao = new BDao();
-		ArrayList<BDto> dtos = dao.list();
-		request.setAttribute("list", dtos);
+		try {
+			request.setCharacterEncoding("UTF-8");
+
+			BDao dao = new BDao();
+			ArrayList<BDto> dtos = dao.list();
+			request.setAttribute("list", dtos);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }
 ```
@@ -258,12 +265,12 @@ public class BListCommand implements BCommand {
 
 ##### 2.5. BModifyCommand.java
 ```java
-package com.mdy.model2_bbs.command;
+package com.mdy.model2_board.command;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.mdy.model2_bbs.dao.BDao;
+import com.mdy.model2_board.dao.BDao;
 
 public class BModifyCommand implements BCommand {
 
@@ -288,12 +295,12 @@ public class BModifyCommand implements BCommand {
 
 ##### 2.6. BReplyCommand.java
 ```java
-package com.mdy.model2_bbs.command;
+package com.mdy.model2_board.command;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.mdy.model2_bbs.dao.BDao;
+import com.mdy.model2_board.dao.BDao;
 
 public class BReplyCommand implements BCommand {
 
@@ -321,13 +328,13 @@ public class BReplyCommand implements BCommand {
 
 ##### 2.7. BReplyViewCommand.java
 ```java
-package com.mdy.model2_bbs.command;
+package com.mdy.model2_board.command;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.mdy.model2_bbs.dao.BDao;
-import com.mdy.model2_bbs.dto.BDto;
+import com.mdy.model2_board.dao.BDao;
+import com.mdy.model2_board.dto.BDto;
 
 public class BReplyViewCommand implements BCommand {
 
@@ -349,25 +356,30 @@ public class BReplyViewCommand implements BCommand {
 
 ##### 2.8. BWriteCommand.java
 ```java
-package com.mdy.model2_bbs.command;
+package com.mdy.model2_board.command;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.mdy.model2_bbs.dao.BDao;
+import com.mdy.model2_board.dao.BDao;
 
 public class BWriteCommand implements BCommand {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
 		// TODO Auto-generated method stub
+		try {
+			request.setCharacterEncoding("UTF-8");
+			String bName = request.getParameter("bName");
+			String bTitle = request.getParameter("bTitle");
+			String bContent = request.getParameter("bContent");
+			System.out.println("##### BWriteCommand " + bName + " : " + bTitle + " : " + bContent);
 
-		String bName = request.getParameter("bName");
-		String bTitle = request.getParameter("bTitle");
-		String bContent = request.getParameter("bContent");
-
-		BDao dao = new BDao();
-		dao.write(bName, bTitle, bContent);
+			BDao dao = new BDao();
+			dao.write(bName, bTitle, bContent);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }
@@ -381,7 +393,7 @@ public class BWriteCommand implements BCommand {
 
 ##### 3.1. BDto.java
 ```java
-package com.mdy.model2_bbs.dto;
+package com.mdy.model2_board.dto;
 
 import java.sql.Timestamp;
 
@@ -505,7 +517,7 @@ public class BDto {
 
 ##### 4.1. BDao.java
 ```java
-package com.mdy.model2_bbs.dao;
+package com.mdy.model2_board.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -517,7 +529,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
-import com.mdy.model2_bbs.dto.BDto;
+import com.mdy.model2_board.dto.BDto;
 
 public class BDao {
 
@@ -541,7 +553,7 @@ public class BDao {
 		try {
 			connection = dataSource.getConnection();
 			connection.setAutoCommit(false);
-
+			System.out.println(bName + ":" + bTitle + ":" + bContent);
 			String query = "insert into mvc_board (bId, bName, bTitle, bContent, bHit, bGroup, bStep, bIndent) values (mvc_board_seq.nextval, ?, ?, ?, 0, mvc_board_seq.currval, 0, 0)";
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, bName);
@@ -580,7 +592,7 @@ public class BDao {
 		try {
 			connection = dataSource.getConnection();
 
-			String query = "select bId, bName, bTitle, bContent, TO_CHAR(bDate, 'YYYY-MM-DD HH24:MI:SS') AS bDateFmt, bHit, bGroup, bStep, bIndent from mvc_board order by bGroup desc, bStep asc";
+			String query = "select bId, bName, bTitle, bContent, TO_CHAR(bDate, 'YYYY-MM-DD HH24:MI:SS') AS bDateFmt, bHit, bGroup, bStep, bIndent From mvc_board order by bGroup desc, bStep asc";
 			preparedStatement = connection.prepareStatement(query);
 			resultSet = preparedStatement.executeQuery();
 
@@ -868,9 +880,10 @@ public class BDao {
 ## 3-2. JSP Source code
 
 ##### 1. index.jsp
-```jsp
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+```javascript
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
 	response.sendRedirect("/list.do");
 %>
@@ -879,27 +892,62 @@ public class BDao {
 <br>
 
 ##### 2. list.jsp
-```jsp
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+```javascript
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>Insert title here</title>
-</head>
-<body>
+<link rel="stylesheet" type="text/css" href="./css/main.css" />
+<title>리스트</title>
+<style type="text/css">
+body {font-size:20px;}
+.master-title{
+	color: navy;
+	font-size: 60px;
+}
+.master-description{
+	color:green;
+	font-size: 30px;
+}
 
-	<table width = "500" cellpadding = "0" cellspacing = "0" border = "1">
+.btnGoWrite{
+	height:50px;
+	width:150px;
+	font-size: 20px;
+	font-weight: bold;
+}
+
+
+</style>
+</head>
+<!-- <body style="background:green"> -->
+<body>
+	<!-- 전체를 감싸는 태그 -->
+	<div id="page-wrapper">
+		<!-- header -->
+		<header id="main-header">
+			<h1 class="master-title">Dong-Yeon's Board</h1>
+			<h1 class="master-description">MVC패턴을 적용한 Model2 게시판 입니다.</h1>
+		</header>
+
+		<!-- navigation -->
+		<nav id="main-navigation">
+
+		</nav>
+
+		<!-- content(본문) -->
+		<div id="content">
+			<table class="bluetop" width="1000" height="150" cellpadding = "0" cellspacing = "0" border = "2">
 		<tr>
-			<td>번호</td>
-			<td>이름</td>
-			<td>제목</td>
-			<td>날짜</td>
-			<td>히트</td>
+			<th>번호</th>
+			<th>이름</th>
+			<th>제목</th>
+			<th>날짜</th>
+			<th>히트</th>
 		</tr>
-		<c:forEach items = "${list}" var = "dto">
+		<c:forEach items="${list}" var="dto">
 		<tr>
 			<td>${dto.bId}</td>
 			<td>${dto.bName}</td>
@@ -912,10 +960,13 @@ public class BDao {
 		</tr>
 		</c:forEach>
 		<tr>
-			<td colspan = "5"> <a href="write_view.do">글작성</a> </td>
+<!-- 			<td colspan = "5"> <a href="write_view.do">글작성</a> </td> -->
+			<td colspan = "5"> </td>
 		</tr>
 	</table>
-
+		<button type="button" class="btnGoWrite" onclick="location.href='/write_view.do'">글 작성</button>
+		</div>
+	</div>
 </body>
 </html>
 ```
@@ -923,14 +974,28 @@ public class BDao {
 <br>
 
 ##### 3. content_view.jsp
-```jsp
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+```javascript
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="./css/content_view.css" />
+<title>내용(Content) 확인</title>
+
+<style type="text/css">
+
+.btnGoModify{
+	height:40px;
+	width:100px;
+	font-size:20px;
+	font-weight: bold;
+}
+
+
+</style>
+
 <script type="text/javascript">
 function fnDeleteAction(bId) {
 	if(confirm("정말 삭제하시겠습니까?")) {
@@ -943,31 +1008,32 @@ function fnDeleteAction(bId) {
 </head>
 <body>
 
-	<table width = "500" cellpadding = "0" cellspacing = "0" border = "1">
+	<table class="contentTB" width = "700" cellpadding = "0" cellspacing = "0" border = "1">
 		<form action = "modify.do" method = "post">
 			<input type = "hidden" name = "bId" value = "${content_view.bId}">
 			<tr>
-				<td> 번호 </td>
+				<th> 번호 </th>
 				<td> ${content_view.bId} </td>
 			</tr>
 			<tr>
-				<td> 히트 </td>
+				<th> 히트 </th>
 				<td> ${content_view.bHit} </td>
 			</tr>
 			<tr>
-				<td> 이름 </td>
-				<td> <input type="text" name="bName" value="${content_view.bName}"> </td>
+				<th> 이름 </th>
+				<td> <input type="text" name="bName" value="${content_view.bName}" size="80" style="height:25px;"> </td>
 			</tr>
 			<tr>
-				<td> 제목 </td>
-				<td> <input type="text" name="bTitle" value="${content_view.bTitle}"> </td>
+				<th> 제목 </th>
+				<td> <input type="text" name="bTitle" value="${content_view.bTitle}" size="80" style="height:25px;"> </td>
 			</tr>
 			<tr>
-				<td> 내용 </td>
-				<td> <textarea rows="10" name="bContent"> ${content_view.bContent}</textarea></td>
+				<th> 내용 </th>
+				<td> <textarea rows="10" name="bContent" size="80" style="height:200px; width:600px"> ${content_view.bContent}</textarea></td>
 			</tr>
 			<tr>
-				<td colspan="2"> <input type="submit" value="수정"> &nbsp;&nbsp;
+				<td colspan="2">
+				<button type="submit" class="btnGoModify">수정</button>&nbsp;&nbsp;
 				<a href="list.do">목록보기</a>&nbsp;&nbsp;
 				<a href="#" onclick="javascript:fnDeleteAction('${content_view.bId}')">삭제</a>&nbsp;&nbsp;
 				<a href="/reply_view.do?bId=${content_view.bId}">답변</a>
@@ -983,33 +1049,46 @@ function fnDeleteAction(bId) {
 <br>
 
 ##### 4. write_view.jsp
-```jsp
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+```javascript
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>Insert title here</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" type="text/css" href="./css/write_view.css" />
+<title>글 작성 페이지</title>
+<style type="text/css">
+
+.btnWrite{
+	height:40px;
+	width:100px;
+	font-size:20px;
+	font-weight: bold;
+}
+
+</style>
+
 </head>
 <body>
-
-	<table width="500" cellpadding="0" cellspacing="0" border="1">
+	<table class="writeTB" width="700" cellpadding="0" cellspacing="0" border="1">
 		<form action="write.do" method="post">
 			<tr>
-				<td> 이름 </td>
-				<td> <input type = "text" name = "bName" size = "50"> </td>
+				<th> 이름 </th>
+				<td> <input type="text" name="bName" size="80" style="height:25px;"> </td>
 			</tr>
 			<tr>
-				<td> 제목 </td>
-				<td> <input type = "text" name = "bTitle" size = "50"></td>
+				<th> 제목 </th>
+				<td> <input type="text" name="bTitle" size="80" style="height:25px;" ></td>
 			</tr>
 			<tr>
-				<td> 내용 </td>
-				<td> <textarea name = "bContent" rows = "10" ></textarea></td>
+				<th> 내용 </th>
+				<td> <textarea name="bContent" rows="10" size="80" style="height:200px; width:600px"></textarea></td>
 			</tr>
 			<tr>
-				<td colspan="2"> <input type = "submit" value = "입력"> &nbsp;&nbsp; <a href = "list.do"> 목록보기 </a></td>
+				<!-- <td colspan="2"> <input type="submit" value="입력"> &nbsp;&nbsp; <a href="list.do"> 목록보기 </a></td> -->
+				<td colspan="2"> <button type="submit" class="btnWrite">입력</button> &nbsp;&nbsp; <a href="list.do"> 목록보기 </a></td>
 			</tr>
 		</form>
 	</table>
@@ -1021,45 +1100,61 @@ function fnDeleteAction(bId) {
 <br>
 
 ##### 5. reply_view.jsp
-```jsp
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+```javascript
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>Insert title here</title>
+
+<link rel="stylesheet" type="text/css" href="./css/reply_view.css" />
+
+<title>답변</title>
 </head>
+<style>
+/* body {background:red;} */
+
+.btnReply{
+	height:40px;
+	width:100px;
+	font-size:20px;
+	font-weight:bold;
+}
+
+</style>
 <body>
 
-	<table width = "500" cellpadding = "0" cellspacing = "0" border = "1">
+	<table class="replyTB" width = "700" cellpadding = "0" cellspacing = "0" border = "1">
 		<form action="/reply.do" method="post">
 			<input type = "hidden" name = "bId" value = "${reply_view.bId}">
 			<input type = "hidden" name = "bGroup" value = "${reply_view.bGroup}">
 			<input type = "hidden" name = "bStep" value = "${reply_view.bStep}">
 			<input type = "hidden" name = "bIndent" value = "${reply_view.bIndent}">
 			<tr>
-				<td> 번호 </td>
+				<th> 번호 </th>
 				<td> ${reply_view.bId}</td>
 			</tr>
 			<tr>
-				<td> 히트 </td>
+				<th> 히트 </th>
 				<td> ${reply_view.bHit}</td>
 			</tr>
 			<tr>
-				<td> 이름 </td>
-				<td> <input type = "text" name = "bName" value = "${reply_view.bName}"></td>
+				<th> 이름 </th>
+				<td> <input type = "text" name = "bName" value = "${reply_view.bName}" size="80" style="height:25px;"></td>
 			</tr>
 			<tr>
-				<td> 제목 </td>
-				<td> <input type = "text" name = "bTitle" value = "${reply_view.bTitle}"></td>
+				<th> 제목 </th>
+				<td> <input type = "text" name = "bTitle" value = "${reply_view.bTitle}" size="80" style="height:25px;"></td>
 			</tr>
 			<tr>
-				<td> 내용 </td>
-				<td> <textarea rows="10" name = "bContent"> ${reply_view.bContent }</textarea> </td>
+				<th> 내용 </th>
+				<td> <textarea rows="10" name = "bContent" size="80" style="height:200px; width:600px"> ${reply_view.bContent }</textarea> </td>
 			</tr>
 			<tr>
-				<td colspan="2"> <input type="submit" value = "답변 "> <a href="/list.do">목록 </a></td>
+				<td colspan="2">
+				<button type="submit" class="btnReply">답변</button>
+				<a href="/list.do">목록 </a></td>
 			</tr>
 		</form>
 	</table>
@@ -1110,17 +1205,15 @@ function fnDeleteAction(bId) {
     <Valve className="org.apache.catalina.valves.CometConnectionManagerValve" />
     -->
 
-    <Resource
-    	auth = "Container"
-    	driverClassName = "oracle.jdbc.driver.OracleDriver"
-    	url = "jdbc:oracle:thin:@localhost:1521:orcl"
-    	username = "daniel"
-    	password = "daniel"
-    	name = "jdbc/Oracle11g"
-    	type = "javax.sql.DataSource"
-    	maxActive = "50"
-    	maxWait = "1000"
-   	/>
+    <Resource auth="Container"
+    driverClassName="oracle.jdbc.driver.OracleDriver"
+    maxActive="50"
+    maxWait="1000"
+    name="jdbc/Oracle11g"
+    password="daniel"
+    type="javax.sql.DataSource"
+    url="jdbc:oracle:thin:@localhost:1521:orcl"
+    username="daniel"/>
 </Context>
 ```
 
@@ -1158,7 +1251,7 @@ function fnDeleteAction(bId) {
 ##### 1. index.jsp 파일 생성
 - 서버를 실행하면 기본적으로 index.jsp가 실행되게끔 WebContent - WEB-INF - web.xml 에 설정이 되어 잇다.
 - 그래서 index.jsp 파일을 만들고, 여기서 response.sendRedirect를 이용해 원하는 페이지를 첫페이지로 만들 수 있다.
-```jsp
+```javascript
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
 <%
@@ -1204,12 +1297,16 @@ try {
 
 - (2) `Servers` - `server.xml` 안에서
 ```
+
 ...
-  <Context docBase="model2_bbs" path="/" reloadable="true" source="org.eclipse.jst.jee.server:model2_bbs"/></Host>
+
+  <Context docBase="Model2_Board" path="/" reloadable="true" source="org.eclipse.jst.jee.server:Model2_Board"/></Host>
+
 ...
+
 ```
 - path 에 프로젝트 이름이 설정되어 있는데 / 로 바꿔준다.
-  - path="model2_bbs"   ->   path="/"
+  - path="Model2_Board"   ->   path="/"
 
 
 <br>
