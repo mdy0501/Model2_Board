@@ -1,4 +1,4 @@
-# Model2_BBS
+# Model2_Board
 #### 1. JSP/Servlet을 이용해 MVC 패턴의 게시판을 만들어본다.
 #### 2. 본 내용은 [Seoul Wiz](https://www.youtube.com/watch?v=APJAJeePl4g&list=PLieE0qnqO2kTyzAlsvxzoulHVISvO8zA9&index=33) 동영상 강의를 참고하여 실습을 진행하였습니다.
 
