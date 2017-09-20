@@ -45,22 +45,3 @@ img {border:0;}
 .bluetop tr td:nth-child(3) {text-align:left;}
 
 
-
-.blueone {
-  border-collapse: collapse;
-}  
-.blueone th {
-  padding: 10px;
-  color: #168;
-  border-bottom: 3px solid #168;
-  text-align: left;
-}
-.blueone td {
-  color: #669;
-  padding: 10px;
-  border-bottom: 1px solid #ddd;
-}
-.blueone tr:hover td {
-  color: #004;
-}
-
