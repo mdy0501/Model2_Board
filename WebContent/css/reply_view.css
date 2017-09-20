@@ -1,0 +1,42 @@
+@charset "UTF-8";
+
+* {	margin: 10px;padding: 0;}
+ul {list-style:none;}
+a {text-decoration:nono;}
+
+body {
+	font-family:맑은 고딕;
+	font-size: 20px;
+}
+
+
+.replyTB table {
+	width:100%;
+	margin:15px 0;
+	border:0;
+}
+.replyTB th {
+	background-color:#C3E7FA;
+	color:#000000
+}
+.replyTB, .replyTB th, .replyTB td {
+	font-size:0.95em;
+	/* text-align:center; */
+	padding:4px;
+	border-collapse:collapse;
+}
+.replyTB th, .replyTB td {
+	border: 1px solid #dcf1fc;
+	border-width:1px 0 1px 0
+}
+.replyTB tr {
+	border: 1px solid #dcf1fc;
+}
+.replyTB tr:nth-child(odd){
+	background-color:#ebf7fd;
+}
+.replyTB tr:nth-child(even){
+	background-color:#fdfdfd;
+}
+
+.replyTB tr td {text-align:center;}
