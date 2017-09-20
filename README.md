@@ -880,6 +880,7 @@ public class BDao {
 ## 3-2. JSP Source code
 
 ##### 1. index.jsp
+
 ```javascript
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -892,7 +893,9 @@ public class BDao {
 <br>
 
 ##### 2. list.jsp
-```javascript
+
+```java
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
