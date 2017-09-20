@@ -1167,7 +1167,205 @@ function fnDeleteAction(bId) {
 <br>
 
 
-## 3-3. 설정 파일
+
+## 3-3. CSS Code
+
+##### 1. main.css
+```css
+@charset "UTF-8";
+
+/* default */
+* {margin:10px;padding:0;}
+ul {list-style:none;}
+a {text-decoration:none;}
+body {
+	font-family:맑은 고딕;
+	font-size: 20px;
+}
+img {border:0;}
+
+.bluetop table {
+	width:100%;
+	margin:15px 0;
+	border:0;
+}
+.bluetop th {
+	background-color:#C3E7FA;
+	color:#000000
+}
+.bluetop,.bluetop th,.bluetop td {
+	font-size:0.95em;
+	/* text-align:center; */
+	padding:4px;
+	border-collapse:collapse;
+}
+.bluetop th,.bluetop td {
+	border: 1px solid #dcf1fc;
+	border-width:1px 0 1px 0
+}
+.bluetop tr {
+	border: 1px solid #dcf1fc;
+}
+.bluetop tr:nth-child(odd){
+	background-color:#ebf7fd;
+}
+.bluetop tr:nth-child(even){
+	background-color:#fdfdfd;
+}
+
+.bluetop tr td {text-align:center;}
+.bluetop tr td:nth-child(3) {text-align:left;}
+```
+
+<br>
+
+##### 2. write_view.css
+```css
+@charset "UTF-8";
+
+* {	margin: 10px;padding: 0;}
+ul {list-style:none;}
+a {text-decoration:nono;}
+
+body {
+	font-family:맑은 고딕;
+	font-size: 20px;
+}
+
+
+.writeTB table {
+	width:100%;
+	margin:15px 0;
+	border:0;
+}
+.writeTB th {
+	background-color:#C3E7FA;
+	color:#000000
+}
+.writeTB,.writeTB th,.writeTB td {
+	font-size:0.95em;
+	/* text-align:center; */
+	padding:4px;
+	border-collapse:collapse;
+}
+.writeTB th,.writeTB td {
+	border: 1px solid #dcf1fc;
+	border-width:1px 0 1px 0
+}
+.writeTB tr {
+	border: 1px solid #dcf1fc;
+}
+.writeTB tr:nth-child(odd){
+	background-color:#ebf7fd;
+}
+.writeTB tr:nth-child(even){
+	background-color:#fdfdfd;
+}
+
+.writeTB tr td {text-align:center;}
+```
+
+<br>
+
+##### 3. content_view.css
+```css
+@charset "UTF-8";
+
+* {	margin: 10px;padding: 0;}
+ul {list-style:none;}
+a {text-decoration:nono;}
+
+body {
+	font-family:맑은 고딕;
+	font-size: 20px;
+}
+
+
+.contentTB table {
+	width:100%;
+	margin:15px 0;
+	border:0;
+}
+.contentTB th {
+	background-color:#C3E7FA;
+	color:#000000
+}
+.contentTB, .contentTB th, .contentTB td {
+	font-size:0.95em;
+	/* text-align:center; */
+	padding:4px;
+	border-collapse:collapse;
+}
+.contentTB th, .contentTB td {
+	border: 1px solid #dcf1fc;
+	border-width:1px 0 1px 0
+}
+.contentTB tr {
+	border: 1px solid #dcf1fc;
+}
+.contentTB tr:nth-child(odd){
+	background-color:#ebf7fd;
+}
+.contentTB tr:nth-child(even){
+	background-color:#fdfdfd;
+}
+
+.contentTB tr td {text-align:center;}
+```
+
+<br>
+
+##### 4. reply_view.css
+```css
+@charset "UTF-8";
+
+* {	margin: 10px;padding: 0;}
+ul {list-style:none;}
+a {text-decoration:nono;}
+
+body {
+	font-family:맑은 고딕;
+	font-size: 20px;
+}
+
+
+.replyTB table {
+	width:100%;
+	margin:15px 0;
+	border:0;
+}
+.replyTB th {
+	background-color:#C3E7FA;
+	color:#000000
+}
+.replyTB, .replyTB th, .replyTB td {
+	font-size:0.95em;
+	/* text-align:center; */
+	padding:4px;
+	border-collapse:collapse;
+}
+.replyTB th, .replyTB td {
+	border: 1px solid #dcf1fc;
+	border-width:1px 0 1px 0
+}
+.replyTB tr {
+	border: 1px solid #dcf1fc;
+}
+.replyTB tr:nth-child(odd){
+	background-color:#ebf7fd;
+}
+.replyTB tr:nth-child(even){
+	background-color:#fdfdfd;
+}
+
+.replyTB tr td {text-align:center;}
+```
+
+
+<br>
+
+
+## 3-4. 설정 파일
 
 ##### 1. `Servers` - `context.xml`
 ```xml
