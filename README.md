@@ -22,11 +22,11 @@
 
 ## 2. 구조
 #### [1] FrontController
-- com.mdy.model_bbs.frontcontroller
+- com.mdy.model2_board.frontcontroller
   - BFrontController.java
 
 #### [2] Command
-- com.mdy.model2_bbs.command
+- com.mdy.model2_board.command
   - BCommand.java
   - BContentCommand.java
   - BDeleteCommand.java
@@ -37,11 +37,11 @@
   - BWriteCommand.java
 
 #### [3] DTO
-- com.mdy.model2_bbs.dto
+- com.mdy.model2_board.dto
   - BDto.java
 
 #### [4] DAO
-- com.mdy.model2_bbs.dao
+- com.mdy.model2_board.dao
   - BDao.java
 
 <br>
